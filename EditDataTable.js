@@ -57,18 +57,17 @@
       }
     }
     
-    function InsertInputEdit(e) {
-      if (e.target.matches(ELemetsNoEditables)) return CancelEvent(e);
-      let isColumnCero = Tabla.column(GetCellNode(e.target)).index() === 0;
-      let rect = e.target.getBoundingClientRect();
-      const EspacioExcluido = GetSpaceBetweenTextAndElement(e.target).left; 
-      if (!(isColumnCero && e.clientX <= (rect.left + EspacioExcluido))) {
-        CancelEvent(e);
+	function InsertInputEdit(e) {
+  		if (e.target.matches(ELemetsNoEditables)) return;
+  		let isColumnCero = Tabla.column(GetCellNode(e.target)).index() === 0;
+  		let rect = e.target.getBoundingClientRect();
+  		const EspacioExcluido = GetSpaceBetweenTextAndElement(e.target).left;
+  		if (!(isColumnCero && e.clientX <= (rect.left + EspacioExcluido))) {
         let CellInfo = Tabla.cell(GetCellNode(e.target));
         let isColumnEditable = ColumnsEditIndx.includes(CellInfo.column(GetCellNode(e.target)).index());
-        if (CellInfo.length === 0 || !isColumnEditable) return
+        if (CellInfo.length === 0 || !isColumnEditable) return; else CancelEvent(e);
         InsertInputInCell(e.target);
-      }
+  		}
     }
  
     function CancelEvent(e) { e.stopPropagation(); }
@@ -147,6 +146,7 @@
       if (SAVEONCLOSE || Save) {
         let NewText = $(Cell).find('input').val();
         SaveInputText(Cell, NewText);
+        Tabla.trigger("editdatatable.on.savedata");
       }
       if ($(Cell).is('span.dtr-data')) {
         let CellNode = $(Tabla.cell(Cell).node()).children().clone();
