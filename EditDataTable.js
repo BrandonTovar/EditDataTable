@@ -146,7 +146,7 @@
       if (SAVEONCLOSE || Save) {
         let NewText = $(Cell).find('input').val();
         SaveInputText(Cell, NewText);
-        Tabla.trigger("editdatatable.on.savedata");
+        Tabla.trigger("editdatatable.on.savedata", { Table: Tabla, Row: Tabla.row(Cell), Data: Tabla.row(Cell).data() });
       }
       if ($(Cell).is('span.dtr-data')) {
         let CellNode = $(Tabla.cell(Cell).node()).children().clone();
