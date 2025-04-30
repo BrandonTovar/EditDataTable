@@ -4,8 +4,8 @@
     if ([$().DataTable === undefined,!$(this).is('table')].every(e=>e)) return
     let Tabla = this.DataTable(InitObject);
     if (Tabla === undefined) return
-    const SAVEHISTORY = InitObject.history ?? false;
-    const SAVEONCLOSE = InitObject.saveOnBlur ?? false;
+    const SAVEHISTORY = InitObject?.history ?? false;
+    const SAVEONCLOSE = InitObject?.saveOnBlur ?? false;
     Tabla.history = SAVEHISTORY ? [] : null;
     let Input = `<input autocomplete="off" name="InputEditCellDataTable" style="background-color:transparent; border: solid 0px;"></input>`;
     let TagEdit = `<span name="TagCellEditDataTable" style="opacity:0.5;align-content:center; position: absolute;right: 0px;background: var(--primary);top: 0px;width: 1rem;height: 1rem;font-size: 0.9rem;border-radius: 0px 0px 0px 3px;color: white;text-align: center;" class="la la-pencil"></span>`;
@@ -84,7 +84,7 @@
     function GetCellNode(Element) {
       let CellInfo = Tabla.cell(Element);
       let Cell = undefined;
-      let isResponsive = Tabla.responsive.hasHidden();
+      let isResponsive = (Tabla?.responsive?.hasHidden?.() ?? false);
  
       if (isResponsive && ($(Element).is('span.dtr-data') || $(Element).closest('span.dtr-data').length))
         Cell = $(Element).closest('span.dtr-data');
@@ -102,7 +102,7 @@
       let PaddingCell = { start: Cell.css('padding-inline-start'), end: Cell.css('padding-inline-end') };
       let MarginStart = '0px !important';
       let FloatInput = 'none';
-      if (Tabla.column(Cell).index() === 0 && Tabla.responsive.hasHidden()) {
+      if (Tabla.column(Cell).index() === 0 && (Tabla?.responsive?.hasHidden?.() ?? false)) {
         CellWidth -= parseFloat(PaddingCell.start);
         MarginStart = PaddingCell.start;
         PaddingCell.start = '0px';
