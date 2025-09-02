@@ -274,7 +274,7 @@
          */
         function ValidateInput(value, type) {
             switch (type) {
-                case "number":
+                case "num":
                     return !isNaN(value) && value.trim() !== "";
                 case "date":
                     return !isNaN(Date.parse(value));
